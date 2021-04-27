@@ -1,3 +1,5 @@
+const Database = require("../db/config");
+
 let data = [
   {
     id: 1,
@@ -16,7 +18,13 @@ let data = [
 ];
 
 module.exports = {
-  get() {
+  async get() {
+    const db = await Database(); // iniciar conexão com o banco
+
+    const data = await db.all(`SELECT * FROM jobs`);
+
+    await db.close();
+
     return data;
   },
   create(newJob) {
